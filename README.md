@@ -1,6 +1,6 @@
 
 # Desafio referente a Fábrica de Software (Back-End) - UNIPÊ 2024.2 
-### OBJETIVO DO DESAFIO :anger: (OPÇÃO 1):
+### OBJETIVO DO DESAFIO :anger: :
   Criar um Projeto Django em Template ou API
 #### REQUISITOS FUNCIONAIS
   
