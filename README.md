@@ -1,12 +1,12 @@
 
-# Desafio referente a Fábrica de Software (Back-End) - UNIPÊ 2024.1 
+# Desafio referente a Fábrica de Software (Back-End) - UNIPÊ 2024.2 
 ### OBJETIVO DO DESAFIO :anger: (OPÇÃO 1):
-Consumir una **API** de sua livre escolha (Tema Livre) e retornar em sua API.
+  Criar um Projeto Django em Template ou API
 #### REQUISITOS FUNCIONAIS
   
-  - [x] Consumir una API diferente da apresentada (ViaCEP), Realizar as quatro operaçóes, POST, GET (ou PATCH), DELETE através do INSOMNIA.
+  - [x] Deve possuir todo o CRUD do django com duas ou mais entidades
   - [x] Deve sem bem documentado, contendo Requirenents.txt e README.md.
-  - [x] Sobrescrever o método create para salvar no banco dados da API. (Receber os dados de um API EXTERNA, na SUA API e salvar no SEU Banco de Dados e Exibir automaticamente).
+  - [x] Possua a capacidade de consumir uma API externa gratuita(Sem token de autenticação) da escolha do usuário para guardar um dado.
             
 #### REQUISITOS NÃO FUNCIONAIS
 
