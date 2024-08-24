@@ -7,10 +7,14 @@
 </head>
 <body>
     <h1>Lista de Livros</h1>
-    <a href="{% url 'livro_create' %}">Adicionar Novo Livro</a>
+    <a href="{% url 'adicionar_livro' %}">Adicionar Novo Livro</a>
     <ul>
         {% for livro in livros %}
-            <li><a href="{% url 'livro_detail' livro.pk %}">{{ livro.titulo }}</a></li>
+            <li>
+                {{ livro.titulo }} - {{ livro.data_publicacao }} - {{ livro.autor }} ({{ livro.categoria.nome }})
+            </br><a href="{% url 'editar_livro' livro.pk %}">Editar</a>
+                <a href="{% url 'excluir_livro' livro.pk %}">Excluir</a>
+            </li>
         {% endfor %}
     </ul>
 </body>
