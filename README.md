@@ -108,7 +108,7 @@ E finalizando criando dentro da template de do aplicativo se não tiver um "adic
 
 ```
 
- #### Agradecimentos especiais(euacho):
+ #### Agradecimentos:
 - Nattan: Dando aquele supporte maroto :nerd_face:
 - Lucas: Uma didatica foda, sabe oque ta fazendo :nerd_face:
 
