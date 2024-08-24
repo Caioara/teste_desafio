@@ -14,10 +14,7 @@
   - [x] Estruturação do Código (Pastas, Classes e Arquivos con nomes concisos e referentes).
 
 #### PONTUAÇÃO EXTRA
-- [] Relação entre dois bancos — Foreingkey, One-To-One...
-- [] Usar banco de dados externo (MySQL, PostGreSQL)
-- [] Acessar um Dicionário Dentro do JSON
-- [] Autenticação com Token do Django Res
+- [x] página funcional e organizada com HTML e CSS (Django template).
 - [x] Commits Semânticos
 
 ## Requerimentos
@@ -44,11 +41,72 @@ pip install requests
 
 
 # Escolha da API
-A princípio, minha prioridade era escolher uma API simples, que me retornasse dados de maneira limpa e que de certa forma fossem fáceis de manipular. A API em questão foi a [REST COUNTRIES](https://restcountries.com/), que me retorna qualquer informação acerca de um país do mundo.
-
+A princípio, minha prioridade era escolher uma API simples, que me retornasse dados de maneira limpa e que de certa forma fossem fáceis de manipular. A API em questão foi a [Open Library Books API]([https://restcountries.com/](https://rapidapi.com/blog/directory/open-library-books/)), que fornece dados sobre livros com base em ISBNs e outros identificadores, oferecendo informações como título, autor e detalhes de publicação.
 # Acesso a API
 
-Antes de qualquer coisa é necessario dar os seguintes comandos no terminal(dentro da venv): ```py manage.py makemigrations```, depois o ```py manage.py migrate```. Agora ao dar o ```py manage.py runserver```, é predefinido um IP local: “http://127.0.0.1:8000/”. Com base nisso, deve-se adicionar os endereçamento correto levando para o CRUD ligado a API em questão. Link esse definido no .Paises/api/urls.py, sendo ele: “http://127.0.0.1:8000/api/paises/”. O usuário deve usar esse link para qualquer tarefa. 
+Antes de qualquer coisa é necessario dentro do seu aplicativo Django:
+Configurar o seu Arquivo views.py dessa maneira:
+```
+import requests
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+def buscar_livro_por_isbn(isbn):
+    url = f'https://openlibrary.org/api/books?bibkeys=ISBN:{isbn}&format=json&jscmd=data'
+    response = requests.get(url)
+    return response.json()
+
+def adicionar_livro(request):
+    if request.method == 'POST':
+        isbn = request.POST.get('isbn')
+        data = buscar_livro_por_isbn(isbn)
+        book_key = f'ISBN:{isbn}'
+        if book_key in data:
+            book = data[book_key]
+            # Processar os dados do livro e salvar no banco de dados
+            # Exemplo: Livro.objects.create(titulo=book['title'], ...)
+            messages.success(request, f"Livro {book['title']} adicionado com sucesso!")
+            return redirect('livro_list')
+        else:
+            messages.error(request, "Livro não encontrado na API.")
+    return render(request, 'adicionar_livro.html')
+ ```
+E depois na urls.py tambem configurar desse jeito:
+```
+from django.urls import path
+from .views import adicionar_livro
+
+urlpatterns = [
+    path('adicionar/', adicionar_livro, name='adicionar_livro'),
+]
+ 
+```
+E finalizando criando dentro da template de do aplicativo se não tiver um "adicionar_livro.html" e configurando desse jeito:
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adicionar Livro</title>
+</head>
+<body>
+    <h1>Adicionar Novo Livro</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="isbn">ISBN:</label>
+        <input type="text" id="isbn" name="isbn" required>
+        <button type="submit">Adicionar Livro</button>
+    </form>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
+
+```
 
 # Métodos POST, GET (ou PATCH), DELETE através do INSOMNIA
 Uma vez configurada no .Paises/api/viewsets.py, a função “create()” tem esse papel sob a API em si. 
