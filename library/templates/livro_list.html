@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Livros</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h1>Lista de Livros</h1>
+    <a href="{% url 'livro_create' %}">Adicionar Novo Livro</a>
+    <ul>
+        {% for livro in livros %}
+            <li><a href="{% url 'livro_detail' livro.pk %}">{{ livro.titulo }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
